@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.8"
 
 services:
   keycloak:
@@ -10,3 +10,19 @@ services:
     environment:
       - KEYCLOAK_ADMIN=admin
       - KEYCLOAK_ADMIN_PASSWORD=admin
+
+  api1:
+    build: ./api1
+    container_name: api1
+    env_file:
+      - ./api1/.env
+    ports:
+      - 3000:3000
+
+  api2:
+    build: ./api2
+    container_name: api2
+    env_file:
+      - ./api2/.env
+    ports:
+      - 4000:4000
