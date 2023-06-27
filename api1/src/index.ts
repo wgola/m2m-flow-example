@@ -1,7 +1,6 @@
+import { auth } from "./middlewares/authentication.middleware";
 import express from "express";
 import dotenv from "dotenv";
-
-import { authenticationMiddleware } from "./middlewares/authentication.middleware";
 import axios from "axios";
 
 dotenv.config();
@@ -13,10 +12,10 @@ app.get("/", (req, res) => {
   res.send("Hello from API1.");
 });
 
-app.get("/resource", authenticationMiddleware, async (req, res) => {
+app.get("/resource", auth, async (req, res) => {
   try {
     const secondAPIurl = process.env.API_URL;
-    const data = await axios.get(`${secondAPIurl}/resource`, {
+    const { data } = await axios.get(`${secondAPIurl}/resource`, {
       headers: { Authorization: `Bearer ${res.locals.token}` },
     });
 
